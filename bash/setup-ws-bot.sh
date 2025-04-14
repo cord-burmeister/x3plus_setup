@@ -17,7 +17,7 @@ cd /home/$USER
 if [ -e m3plus_driver.yaml ]; then
     rm m3plus_driver.yaml
 fi
-wget https://raw.githubusercontent.com/cord-burmeister/x3plus_driver/refs/heads/main/m3plus_driver.yaml
+wget -O m3plus_driver.yaml https://raw.githubusercontent.com/cord-burmeister/x3plus_driver/refs/heads/main/m3plus_driver.yaml
 vcs import < m3plus_driver.yaml
 
 
@@ -35,7 +35,12 @@ cd /home/$USER/$workspacename/src
 # a long wait only to realize that you have missing dependencies.
 
 cd /home/$USER/$workspacename
-sudo rosdep init
+if [ -e /etc/ros/rosdep/sources.list.d/20-default.list ]; then
+    echo rosdep init  was already running.....
+else
+    sudo rosdep init
+fi
+
 rosdep update    
 echo rosdep install -r -y --from-path src --rosdistro $ROS_DISTRO 
 rosdep install -r -y --from-path src --rosdistro humble
