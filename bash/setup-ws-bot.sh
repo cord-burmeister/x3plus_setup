@@ -26,8 +26,8 @@ mkdir -p /home/$USER/$workspacename/src
 cd /home/$USER/$workspacename/src
 
 
-# wget https://raw.githubusercontent.com/cord-burmeister/m3plus_driver/main/m3plus_driver.yaml
-# vcs import < m3plus_driver.yaml
+wget -O x3plus_description.yaml https://raw.githubusercontent.com/cord-burmeister/x3plus_description/refs/heads/main/x3plus_description.yaml
+vcs import < x3plus_description.yaml
 
 # Before building the workspace, you need to resolve the package dependencies. 
 # You may have all the dependencies already, but best practice is to check for 
