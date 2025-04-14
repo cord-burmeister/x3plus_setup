@@ -11,12 +11,23 @@ workspacename=m3_ws
 sudo apt install python3-vcstool python3-colcon-common-extensions git wget -y
 sudo apt install libgflags-dev -y
 
+# Then create a folder which contains the driver and hardware dependend components
+cd /home/$USER
+
+if [ -e m3plus_driver.yaml ]; then
+    rm m3plus_driver.yaml
+fi
+wget https://raw.githubusercontent.com/cord-burmeister/x3plus_driver/refs/heads/main/m3plus_driver.yaml
+vcs import < m3plus_driver.yaml
+
+
 # Then create a new workspace and load the git repositories which are required.
 mkdir -p /home/$USER/$workspacename/src
 cd /home/$USER/$workspacename/src
 
-wget https://raw.githubusercontent.com/cord-burmeister/m3plus_driver/main/m3plus_driver.yaml
-vcs import < m3plus_driver.yaml
+
+# wget https://raw.githubusercontent.com/cord-burmeister/m3plus_driver/main/m3plus_driver.yaml
+# vcs import < m3plus_driver.yaml
 
 # Before building the workspace, you need to resolve the package dependencies. 
 # You may have all the dependencies already, but best practice is to check for 
