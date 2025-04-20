@@ -5,20 +5,19 @@
 # or manually source it:
 source /home/$USER/.bashrc
 
-workspacename=m3_ws
+workspacename=x3plus_ws
 
 # First install required development tools
 sudo apt install python3-vcstool python3-colcon-common-extensions git wget -y
 sudo apt install libgflags-dev -y
-
 
 # Then create a new workspace and load the git repositories which are required.
 mkdir -p /home/$USER/$workspacename/src
 cd /home/$USER/$workspacename/src
 
 
-wget -O x3plus_description.yaml https://raw.githubusercontent.com/cord-burmeister/x3plus_description/refs/heads/main/x3plus_description.yaml
-vcs import < x3plus_description.yaml
+wget -O x3plus.repos https://raw.githubusercontent.com/cord-burmeister/x3plus/refs/heads/main/x3plus.repos
+vcs import < x3plus.repos
 
 # Before building the workspace, you need to resolve the package dependencies. 
 # You may have all the dependencies already, but best practice is to check for 
@@ -36,10 +35,7 @@ rosdep update
 echo rosdep install -r -y --from-path src --rosdistro $ROS_DISTRO 
 rosdep install -r -y --from-path src --rosdistro humble
 
-# cd /home/vagrant/$workspacename
-# colcon build
-
-# source /home/vagrant/$workspacename/install/setup.bash
+source /home/$USER/$workspacename/install/setup.bash
 
 # Add some help finding errors in the logging 
 echo "export RCUTILS_COLORIZED_OUTPUT=1" >> /home/$USER/.bashrc 
