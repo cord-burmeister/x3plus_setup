@@ -24,7 +24,6 @@ vcs import < x3plus.repos
 wget -O x3plus_gz.repos https://raw.githubusercontent.com/cord-burmeister/x3plus_bot/refs/heads/main/x3plus_gz.repos
 vcs import < x3plus_gz.repos
 
-
 # Before building the workspace, you need to resolve the package dependencies. 
 # You may have all the dependencies already, but best practice is to check for 
 # dependencies every time you clone. You wouldn’t want a build to fail after 
@@ -36,7 +35,6 @@ if [ -e /etc/ros/rosdep/sources.list.d/20-default.list ]; then
 else
     sudo rosdep init
 fi
-
 rosdep update    
 echo rosdep install -r -y --from-path src --rosdistro $ROS_DISTRO 
 rosdep install -r -y --from-path src --rosdistro humble

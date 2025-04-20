@@ -17,8 +17,8 @@ cd /home/$USER
 if [ -e m3plus_driver.yaml ]; then
     rm m3plus_driver.yaml
 fi
-wget -O m3plus_driver.yaml https://raw.githubusercontent.com/cord-burmeister/x3plus_driver/refs/heads/main/m3plus_driver.yaml
-vcs import < m3plus_driver.yaml
+wget -O x3plus_driver.yaml https://raw.githubusercontent.com/cord-burmeister/x3plus_driver/refs/heads/main/x3plus_driver.yaml
+vcs import < x3plus_driver.yaml
 
 
 # Then create a new workspace and load the git repositories which are required.
@@ -30,7 +30,6 @@ wget -O x3plus.repos https://raw.githubusercontent.com/cord-burmeister/x3plus/re
 vcs import < x3plus.repos
 wget -O x3plus_bot.repos https://raw.githubusercontent.com/cord-burmeister/x3plus_bot/refs/heads/main/x3plus_bot.repos
 vcs import < x3plus_bot.repos
-
 
 # Before building the workspace, you need to resolve the package dependencies. 
 # You may have all the dependencies already, but best practice is to check for 
