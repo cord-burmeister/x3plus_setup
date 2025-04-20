@@ -15,12 +15,10 @@ sudo apt install libgflags-dev -y
 mkdir -p /home/$USER/$workspacename/src
 cd /home/$USER/$workspacename/src
 
-wget https://raw.githubusercontent.com/cord-burmeister/master3_nav/main/master3_nav.yaml
-vcs import < master3_nav.yaml
-wget https://raw.githubusercontent.com/cord-burmeister/master3_bt3/main/master3_bt3.yaml
-vcs import < master3_bt3.yaml
-wget https://raw.githubusercontent.com/cord-burmeister/master3_sim/main/master3_sim.yaml
-vcs import < master3_sim.yaml
+wget -O x3plus.repos https://raw.githubusercontent.com/cord-burmeister/x3plus/refs/heads/main/x3plus.repos
+vcs import < x3plus.repos
+wget -O x3plus_gz.repos https://raw.githubusercontent.com/cord-burmeister/x3plus_gz/refs/heads/main/x3plus_gz.repos
+vcs import < x3plus_gz.repos
 
 # Before building the workspace, you need to resolve the package dependencies. 
 # You may have all the dependencies already, but best practice is to check for 
@@ -28,7 +26,11 @@ vcs import < master3_sim.yaml
 # a long wait only to realize that you have missing dependencies.
 
 cd /home/$USER/$workspacename
-sudo rosdep init
+if [ -e /etc/ros/rosdep/sources.list.d/20-default.list ]; then
+    echo rosdep init  was already running.....
+else
+    sudo rosdep init
+fi
 rosdep update    
 echo rosdep install -r -y --from-path src --rosdistro $ROS_DISTRO 
 rosdep install -r -y --from-path src --rosdistro humble
