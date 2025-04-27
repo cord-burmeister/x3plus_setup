@@ -2,13 +2,13 @@
 
 Boot strap scripts of my robot project.
 
-## Overview
-
-![](docu/overview.png)
-
 ## Project Description
 
 The `x3plus_setup` project is designed to provide a set of bootstrap scripts for setting up the development environment and workspace for the X3Plus robot project. The goal of this project is to simplify the process of getting started with the X3Plus robot by automating the installation of necessary dependencies and configuration of the development environment.
+
+## Project structure
+
+![](docu/overview.png)
 
 ## Development Environment Setup
 
@@ -16,11 +16,8 @@ The `x3plus_setup` project is designed to provide a set of bootstrap scripts for
 
 Before running the setup scripts, ensure that you have the following dependencies installed:
 
-- Ubuntu 20.04 or later
+- Ubuntu 22.04 or later
 - ROS 2 Humble Hawksbill
-- Git
-- Curl
-- Python 3
 
 ### Instructions
 
