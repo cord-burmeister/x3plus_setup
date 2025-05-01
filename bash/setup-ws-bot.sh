@@ -5,7 +5,7 @@
 # or manually source it:
 source /home/$USER/.bashrc
 
-workspacename=x3p_ws
+workspacename=x3plus_ws
 
 # First install required development tools
 sudo apt install python3-vcstool python3-colcon-common-extensions git wget -y

@@ -1,16 +1,15 @@
-#!/bin/bash
+s#!/bin/bash
 
 # bash won't source .bashrc from an interactive terminal unless I manually run bash from a terminal:
 # $ bash
 # or manually source it:
 source /home/$USER/.bashrc
 
-workspacename=x3p_ws
+workspacename=x3plus_ws
 
 # First install required development tools
 sudo apt install python3-vcstool python3-colcon-common-extensions git wget -y
 sudo apt install libgflags-dev -y
-
 
 # Then create a new workspace and load the git repositories which are required.
 mkdir -p /home/$USER/$workspacename/src
@@ -39,7 +38,7 @@ rosdep install -r -y --from-path src --rosdistro humble
 # cd /home/vagrant/$workspacename
 # colcon build
 
-# source /home/vagrant/$workspacename/install/setup.bash
+source /home/$USER/$workspacename/install/setup.bash
 
 if (grep -q "export RCUTILS_COLORIZED_OUTPUT=1" /home/$USER/.bashrc); then
     echo "RCUTILS_COLORIZED_OUTPUT already set in .bashrc"
