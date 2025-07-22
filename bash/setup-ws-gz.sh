@@ -21,7 +21,7 @@ cd /home/$USER/$workspacename/src
 
 wget -O x3plus.repos https://raw.githubusercontent.com/cord-burmeister/x3plus/refs/heads/main/x3plus.repos
 vcs import < x3plus.repos
-wget -O x3plus_gz.repos https://raw.githubusercontent.com/cord-burmeister/x3plus_bot/refs/heads/main/x3plus_gz.repos
+wget -O x3plus_gz.repos https://raw.githubusercontent.com/cord-burmeister/x3plus_gz/refs/heads/main/x3plus_gz.repos
 vcs import < x3plus_gz.repos
 
 # Before building the workspace, you need to resolve the package dependencies. 
