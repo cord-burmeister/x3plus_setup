@@ -1,4 +1,4 @@
-#!/bin/bash
+s#!/bin/bash
 
 # bash won't source .bashrc from an interactive terminal unless I manually run bash from a terminal:
 # $ bash
@@ -35,14 +35,32 @@ rosdep update
 echo rosdep install -r -y --from-path src --rosdistro $ROS_DISTRO 
 rosdep install -r -y --from-path src --rosdistro humble
 
+# cd /home/vagrant/$workspacename
+# colcon build
+
 source /home/$USER/$workspacename/install/setup.bash
 
+if (grep -q "export RCUTILS_COLORIZED_OUTPUT=1" /home/$USER/.bashrc); then
+    echo "RCUTILS_COLORIZED_OUTPUT already set in .bashrc"
+else
 # Add some help finding errors in the logging 
-echo "export RCUTILS_COLORIZED_OUTPUT=1" >> /home/$USER/.bashrc 
+    echo "export RCUTILS_COLORIZED_OUTPUT=1" >> /home/$USER/.bashrc
+fi
 
  # Add sourcing to your shell startup script
-echo "source /home/$USER/$workspacename/install/setup.bash" >> /home/$USER/.bashrc
-echo "cd /home/$USER/$workspacename" >> /home/$USER/.bashrc
+
+if (grep -q "source /home/$USER/$workspacename/install/setup.bash" /home/$USER/.bashrc ) then 
+    echo "source /home/$USER/$workspacename/install/setup.bash already set in .bashrc"
+else
+ echo "source /home/$USER/$workspacename/install/setup.bash" >> /home/$USER/.bashrc
+fi
+
+
+if (grep -q "cd /home/$USER/$workspacename" /home/$USER/.bashrc ) then 
+    echo "cd /home/$USER/$workspacename already set in .bashrc"
+else
+ echo "cd /home/$USER/$workspacename" >> /home/$USER/.bashrc
+fi
 
 
 
