@@ -16,8 +16,8 @@ mkdir -p /home/$USER/$workspacename/src
 cd /home/$USER/$workspacename/src
 
 
-wget -O x3plus.repos https://raw.githubusercontent.com/cord-burmeister/x3plus/refs/heads/main/x3plus.repos
-vcs import < x3plus.repos
+wget -O x3plus_pit.repos https://raw.githubusercontent.com/cord-burmeister/x3plus/refs/heads/main/x3plus_pit.repos
+vcs import < x3plus_pit.repos
 
 # Before building the workspace, you need to resolve the package dependencies. 
 # You may have all the dependencies already, but best practice is to check for 

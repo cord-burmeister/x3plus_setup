@@ -75,3 +75,9 @@ The `x3plus_setup` project consists of the following components:
 
 - The setup scripts are designed to work on Ubuntu 2s.04 or later. Compatibility with other operating systems is not guaranteed.
 - Some dependencies may require manual installation if they are not available through the package manager.
+
+## Github Pages
+
+The web site of the project can be found under
+
+[Github Pages](https://cord-burmeister.github.io/x3plus_docs/)
