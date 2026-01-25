@@ -1,0 +1,69 @@
+
+Vagrant.configure("2") do |config|
+    config.vm.box = "marvin/jammy-humble-harmonic"
+    config.vm.box_url = "file://" + ENV['VAGRANTBOXSHARE'].gsub("\\", "/") + "/jammy-humble-harmonicMetadata.json"
+
+    # This is the default network from Hyper-V on a non server Windows Version with NAT
+    # config.vm.network "public_network", bridge: "Default Switch"
+    # This is the external network to have access to other devices on the LAN
+    # This is required when using multiple VMs that should communicate with each other
+    # Use .\CreateBridgedNetworkAdapter.ps1 to create the External-Auto switch
+    config.vm.network "public_network", bridge: "External-Auto"
+    # setting the hostname 
+    config.vm.hostname = "jahuhadev"
+    
+    # Disable shared folder, because we do not need it
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+
+    config.ssh.username = "vagrant"    
+    config.ssh.password = "vagrant"    
+
+    # Configure the hardware parameter
+    config.vm.provider "hyperv" do |vm|
+      vm.memory = 8192
+      vm.maxmemory = 8192
+      vm.cpus = 4
+    end
+
+
+config.vm.provision "shell", reboot: true, inline: <<-SHELL1
+    # Install locale tools (usually already installed)
+    echo "sudo apt install locales"
+    sudo apt install locales
+    echo "sudo apt install console-setup keyboard-configuration"
+    sudo apt install console-data keyboard-configuration
+    # Generate German locale
+    echo "sudo locale-gen de_DE.UTF-8"
+    sudo locale-gen de_DE.UTF-8
+    # Set system locale to German
+    echo "sudo update-locale LANG=de_DE.UTF-8"
+    sudo update-locale LANG=de_DE.UTF-8
+    # Set the system keyboard layout to German X11 / Desktop:
+    echo "sudo localectl set-x11-keymap de"
+    sudo localectl set-x11-keymap de
+    # Most Vagrant boxes do not use the Linux console, so you only need the X11 keymap:
+    ## Set the system keyboard layout to German console:
+    #echo "sudo localectl set-keymap de"
+    #sudo localectl set-keymap de
+    # reboot so the environment picks up the new locale.
+SHELL1
+
+
+    # Setup the network to play nicely with windows in the development environment
+    config.vm.provision "shell", reset: true, privileged: true, path: "../../bash/setup-dev-development.sh"
+
+    # Setup the development environment (this might be redundant to the box setup ) 
+    config.vm.provision "shell", reset: true, privileged: true, path: "../../bash/setup-network.sh"
+
+    # Setup the workspace for simulation and development
+    config.vm.provision "shell", reset: true, privileged: false, path: "../../bash/setup-ws-gz.sh"
+
+    # Setup the workspace for cockpit and development
+    config.vm.provision "shell", reset: true, privileged: false, path: "../../bash/setup-ws-pit.sh"
+
+    # compile  the workspace 
+    # config.vm.provision "shell", reboot: false, privileged: false, path: "../../bash/compile-workspace.sh"
+
+    
+  end
+  

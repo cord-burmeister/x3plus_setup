@@ -30,7 +30,7 @@ sudo apt update -y
 sudo apt upgrade -y
 
 # Desktop Install (Recommended): ROS, RViz, demos, tutorials.
-sudo apt install ros-humble-desktop -y
+sudo apt install ros-jazzy-desktop -y
 
 # Development tools: Compilers and other tools to build ROS packages
 sudo apt install ros-dev-tools -y

@@ -1,0 +1,59 @@
+# Default vagrant file to spin off a ubuntu 22.04 for hyper-v on my windows machine
+Vagrant.configure("2") do |config|
+    config.vm.box = "gusztavvargadr/ubuntu-desktop-2204-lts"
+    config.vm.box_version = "2511.0.0"
+    # Try to work without the shared folder to ease the setup process
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+    config.vm.allow_fstab_modification = false
+    # Setting the network to the Hyper V Default Switch with implicit NAT Support
+    config.vm.network "public_network", bridge: "Default Switch"
+
+    # setting the hostname 
+    config.vm.hostname = "box-jahuha"
+
+    # Setting ssh to user name password mode
+    config.ssh.username = "vagrant"    
+    config.ssh.password = "vagrant"    
+
+    # Enable provisioning with a shell script. Additional provisioners such as
+    # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
+    # documentation for more information about their specific syntax and use.
+    config.vm.provision "shell", reboot: true, inline: <<-SHELL1
+      # Disable welcome screen 
+      # https://ubuntuhandbook.org/index.php/2023/01/disable-welcome-dialog-ubuntu-22-04/
+      sudo apt remove --autoremove gnome-initial-setup -y
+      # Update 
+      sudo apt-get update -y
+      # Perform a full upgrade
+      sudo apt-get full-upgrade -y
+      # Display kernel 
+      uname -a
+    SHELL1
+
+    
+    # Update PGP Key ROS distribution
+    config.vm.provision "shell", reboot: true, path: "../../bash/update-keys.sh"
+
+    # External script to install ROS distribution
+    config.vm.provision "shell", reboot: true, path: "../../bash/setup-humble.sh"
+
+    # External script to setup the user context for the ROS distribution
+    config.vm.provision "shell", privileged: false, path: "../../bash/setup-humble-user.sh"
+
+    # External script to install gazebo harmonic distribution without the ros package
+    config.vm.provision "shell", reboot: true, path: "../../bash/setup-ros2-gz-harmonic.sh"
+
+    # adding additional developer tools 
+    config.vm.provision "shell", reboot: true, path: "../../bash/setup-box-development.sh"
+
+  # config.vm.provision "shell", reboot: true, inline: <<-SHELL2
+  #   uname -a
+  #   # You can also update via the command line by running sudo apt update && sudo apt full-upgrade or sudo apt dist-upgrade.
+  #   # If you don’t want to install all pending updates, run sudo apt install linux-image-generic-hwe-22.04 to pull it in.
+  #   sudo apt install linux-image-generic-hwe-22.04 -y
+  #   sudo reboot
+  # SHELL2
+
+  # Setup the workspace
+  #config.vm.provision "shell", path: "../bash/setup-workspace.sh"
+end
