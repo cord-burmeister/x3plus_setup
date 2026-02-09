@@ -1,5 +1,53 @@
 #!/bin/bash
 
+################################################################################
+# Script Name: setup-ws-bot.sh
+# Description: Sets up X3Plus robot controller workspace
+#
+# Purpose:
+#   This script creates and configures the ROS 2 workspace for the X3Plus
+#   robot controller. It clones the necessary repositories, installs
+#   dependencies, and configures the user environment.
+#
+# Prerequisites:
+#   - ROS 2 Humble installed (run setup-humble.sh first)
+#   - Internet connection for cloning repositories
+#   - sudo privileges for installing dependencies
+#
+# Usage:
+#   bash setup-ws-bot.sh
+#
+# What it does:
+#   1. Sources the user's .bashrc to load ROS environment
+#   2. Installs development tools (vcstool, colcon, git, wget, libgflags-dev)
+#   3. Downloads and imports x3plus_driver repositories
+#   4. Creates workspace directory: ~/x3plus_ws/src
+#   5. Downloads and imports x3plus and x3plus_bot repositories
+#   6. Initializes and updates rosdep
+#   7. Installs all ROS dependencies for the workspace
+#   8. Configures .bashrc with:
+#      - RCUTILS_COLORIZED_OUTPUT for better logging
+#      - Auto-sourcing of workspace setup
+#      - Auto-navigation to workspace directory
+#
+# Expected Outcome:
+#   - Workspace created at ~/x3plus_ws with all robot controller packages
+#   - Dependencies installed and ready to build with 'colcon build'
+#   - .bashrc configured for automatic workspace setup
+#
+# Directory Structure:
+#   ~/x3plus_driver/     - Hardware driver components
+#   ~/x3plus_ws/src/     - Main workspace with robot packages
+#
+# Notes:
+#   - The script is idempotent for .bashrc modifications
+#   - You need to build the workspace with 'colcon build' after running this
+#   - Source your .bashrc or open a new terminal for changes to take effect
+#
+# Author: X3Plus Setup Project
+# Version: 1.0
+################################################################################
+
 # bash won't source .bashrc from an interactive terminal unless I manually run bash from a terminal:
 # $ bash
 # or manually source it:

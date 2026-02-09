@@ -1,5 +1,53 @@
 #!/bin/bash
 
+################################################################################
+# Script Name: setup-ws-gz.sh
+# Description: Sets up X3Plus Gazebo simulation workspace
+#
+# Purpose:
+#   This script creates and configures the ROS 2 workspace for the X3Plus
+#   Gazebo simulation environment. It clones the necessary repositories,
+#   installs dependencies, and configures the user environment.
+#
+# Prerequisites:
+#   - ROS 2 Humble installed (run setup-humble.sh first)
+#   - Gazebo Harmonic installed (run setup-ros2-gz-harmonic.sh)
+#   - Internet connection for cloning repositories
+#   - sudo privileges for installing dependencies
+#
+# Usage:
+#   bash setup-ws-gz.sh
+#
+# What it does:
+#   1. Sources the user's .bashrc to load ROS environment
+#   2. Installs development tools (vcstool, colcon, git, wget, libgflags-dev)
+#   3. Creates workspace directory: ~/x3plus_ws/src
+#   4. Downloads and imports x3plus and x3plus_gz repositories
+#   5. Initializes and updates rosdep
+#   6. Installs all ROS dependencies for the workspace
+#   7. Configures .bashrc with:
+#      - RCUTILS_COLORIZED_OUTPUT for better logging
+#      - Auto-sourcing of workspace setup
+#      - Auto-navigation to workspace directory
+#
+# Expected Outcome:
+#   - Workspace created at ~/x3plus_ws with all simulation packages
+#   - Dependencies installed and ready to build with 'colcon build'
+#   - .bashrc configured for automatic workspace setup
+#
+# Directory Structure:
+#   ~/x3plus_ws/src/     - Main workspace with simulation packages
+#
+# Notes:
+#   - The script is idempotent for .bashrc modifications
+#   - You need to build the workspace with 'colcon build' after running this
+#   - Source your .bashrc or open a new terminal for changes to take effect
+#   - Use this for Gazebo simulation development
+#
+# Author: X3Plus Setup Project
+# Version: 1.0
+################################################################################
+
 # bash won't source .bashrc from an interactive terminal unless I manually run bash from a terminal:
 # $ bash
 # or manually source it:

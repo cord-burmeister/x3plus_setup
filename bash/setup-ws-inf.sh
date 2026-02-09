@@ -1,4 +1,51 @@
-s#!/bin/bash
+#!/bin/bash
+
+################################################################################
+# Script Name: setup-ws-inf.sh
+# Description: Sets up X3Plus infrastructure workspace
+#
+# Purpose:
+#   This script creates and configures the ROS 2 workspace for the X3Plus
+#   infrastructure components. It clones the necessary repositories,
+#   installs dependencies, and configures the user environment.
+#
+# Prerequisites:
+#   - ROS 2 Humble installed (run setup-humble.sh first)
+#   - Internet connection for cloning repositories
+#   - sudo privileges for installing dependencies
+#
+# Usage:
+#   bash setup-ws-inf.sh
+#
+# What it does:
+#   1. Sources the user's .bashrc to load ROS environment
+#   2. Installs development tools (vcstool, colcon, git, wget, libgflags-dev)
+#   3. Creates workspace directory: ~/x3plus_ws/src
+#   4. Downloads and imports x3plus_inf repositories
+#   5. Initializes and updates rosdep
+#   6. Installs all ROS dependencies for the workspace
+#   7. Configures .bashrc with:
+#      - RCUTILS_COLORIZED_OUTPUT for better logging
+#      - Auto-sourcing of workspace setup
+#      - Auto-navigation to workspace directory
+#
+# Expected Outcome:
+#   - Workspace created at ~/x3plus_ws with infrastructure packages
+#   - Dependencies installed and ready to build with 'colcon build'
+#   - .bashrc configured for automatic workspace setup
+#
+# Directory Structure:
+#   ~/x3plus_ws/src/     - Main workspace with infrastructure packages
+#
+# Notes:
+#   - The script is idempotent for .bashrc modifications
+#   - You need to build the workspace with 'colcon build' after running this
+#   - Source your .bashrc or open a new terminal for changes to take effect
+#   - Use this for infrastructure components setup
+#
+# Author: X3Plus Setup Project
+# Version: 1.0
+################################################################################
 
 # bash won't source .bashrc from an interactive terminal unless I manually run bash from a terminal:
 # $ bash
