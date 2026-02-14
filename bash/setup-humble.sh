@@ -1,5 +1,44 @@
 #!/bin/bash
 
+################################################################################
+# Script Name: setup-humble.sh
+# Description: Installs ROS 2 Humble Hawksbill on Ubuntu systems
+#
+# Purpose:
+#   This script automates the installation of ROS 2 Humble Hawksbill, including
+#   the desktop installation (ROS, RViz, demos, tutorials) and development tools.
+#   It configures system locales, adds ROS repositories, and installs all
+#   necessary packages for ROS 2 development.
+#
+# Prerequisites:
+#   - Ubuntu 22.04 (Jammy Jellyfish) or compatible version
+#   - Internet connection for downloading packages
+#   - sudo privileges for package installation
+#
+# Usage:
+#   bash setup-humble.sh
+#
+# What it does:
+#   1. Configures UTF-8 locale (en_US.UTF-8)
+#   2. Enables Ubuntu Universe repository
+#   3. Adds ROS 2 GPG key and repository
+#   4. Updates system packages
+#   5. Installs ros-humble-desktop (full desktop installation)
+#   6. Installs ros-dev-tools (development tools and compilers)
+#
+# Expected Outcome:
+#   ROS 2 Humble will be installed in /opt/ros/humble/
+#   You can source the environment with: source /opt/ros/humble/setup.bash
+#
+# Notes:
+#   - After installation, you need to source the setup file or run
+#     setup-humble-user.sh to add it to your .bashrc
+#   - This script may take 10-30 minutes depending on your internet speed
+#
+# Author: X3Plus Setup Project
+# Version: 1.0
+################################################################################
+
 # Make sure you have a locale which supports UTF-8. If you are in a minimal 
 # environment (such as a docker container), the locale may be something minimal
 #  like POSIX. We test with the following settings. However, it should be fine 
