@@ -50,7 +50,7 @@ SHELL1
 
 config.vm.provision "shell", reboot: false, inline: <<-SHELL2
     gsettings set org.gnome.shell favorite-apps \
-    "$(gsettings get org.gnome.shell favorite-apps | sed "s/]$/, 'org.gnome.Nautilus.desktop']/")"
+    "$(gsettings get org.gnome.shell favorite-apps | sed "s/]$/, 'org.gnome.Terminal.desktop', 'code.desktop']/")"
 SHELL2
 
 
@@ -65,6 +65,9 @@ SHELL2
 
     # Setup the workspace for cockpit and development
     config.vm.provision "shell", reset: true, privileged: false, path: "../../bash/setup-ws-pit.sh"
+
+    # Setup the workspace for infrastructure and development
+    config.vm.provision "shell", reset: true, privileged: false, path: "../../bash/setup-ws-inf.sh"
 
     # compile  the workspace 
     # config.vm.provision "shell", reboot: false, privileged: false, path: "../../bash/compile-workspace.sh"
