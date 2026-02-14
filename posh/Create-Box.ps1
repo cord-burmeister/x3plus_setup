@@ -5,7 +5,7 @@
 #.Description
 #	The Virtual machine configuration in the Hyper-V Manager 
 # requires some post processing to be used as box in the vagrant 
-# environmetn
+# environment
 #.Parameter BoxName
 #    This is the name of the vagrant box which will be generated. This is also the name of the 
 #    folder which contains the vagrant file which generates the default name of the VM in hyper-V
