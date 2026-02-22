@@ -4,7 +4,7 @@
 #.Description
 #	The Virtual machine configuration in the Hyper-V Manager 
 # requires some post processing to be used as box in the vagrant 
-# environmetn
+# environment
 #.Parameter BoxName
 #    This is the name of the vagrant box which will be generated
 #.Parameter PrefixVM
