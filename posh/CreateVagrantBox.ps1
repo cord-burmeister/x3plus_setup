@@ -18,8 +18,8 @@
 ##>
 
 param (	
-  [string] $BoxName = "ros2humble",
-  [string] $PrefixVM = "ubuntu-box-vagrant",
+  [string] $BoxName = "jammy-humble-harmonic",
+  [string] $PrefixVM = "ubuntu-box",
   [string] $WorkingFolder = "c:\work"
   )
 
@@ -74,14 +74,8 @@ Remove-Item $WorkingFolder\$BoxName\$BoxName.tar
 $vmSize = "{0:N2} GB" -f ((Get-ChildItem $WorkingFolder\$VmName -Recurse -Exclude "*.box" | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1GB)
 $boxSize = "{0:N2} GB" -f ((Get-ChildItem $WorkingFolder\$BoxName -Recurse -Include "*.box" | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1GB)
 
-# if (Test-Path "$WorkingFolder\Virtual Machines" -PathType Container)
-# {
-#     Remove-Item "$WorkingFolder\Virtual Machines" -Recurse -Force
-# }
-# if (Test-Path "$WorkingFolder\Virtual Hard Disks" -PathType Container)
-# {
-#     Remove-Item "$WorkingFolder\Virtual Hard Disks" -Recurse -Force
-# }
+# Remove the intermediate files, when you want to keep them for debugging purposes, comment this out. 
+Remove-Item $WorkingFolder\$VmName -Recurse -Force
 
 Write-Host "Created a box file. Box Size $boxSize. Virtual Machine Size $vmSize "
 Write-Host "Do add the box manually use:"

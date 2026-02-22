@@ -1,12 +1,12 @@
 #!/bin/bash
 
 ################################################################################
-# Script Name: setup-ws-inf.sh
-# Description: Sets up X3Plus infrastructure workspace
+# Script Name: setup-ws-playground.sh
+# Description: Sets up X3Plus playground workspace
 #
 # Purpose:
 #   This script creates and configures the ROS 2 workspace for the X3Plus
-#   infrastructure components. It clones the necessary repositories,
+#   playground components. It clones the necessary repositories,
 #   installs dependencies, and configures the user environment.
 #
 # Prerequisites:
@@ -15,13 +15,13 @@
 #   - sudo privileges for installing dependencies
 #
 # Usage:
-#   bash setup-ws-inf.sh
+#   bash setup-ws-playground.sh
 #
 # What it does:
 #   1. Sources the user's .bashrc to load ROS environment
 #   2. Installs development tools (vcstool, colcon, git, wget, libgflags-dev)
 #   3. Creates workspace directory: ~/x3plus_ws/src
-#   4. Downloads and imports x3plus_inf repositories
+#   4. Downloads and imports x3plus_playground repositories
 #   5. Initializes and updates rosdep
 #   6. Installs all ROS dependencies for the workspace
 #   7. Configures .bashrc with:
@@ -30,18 +30,18 @@
 #      - Auto-navigation to workspace directory
 #
 # Expected Outcome:
-#   - Workspace created at ~/x3plus_ws with infrastructure packages
+#   - Workspace created at ~/x3plus_ws with playground packages
 #   - Dependencies installed and ready to build with 'colcon build'
 #   - .bashrc configured for automatic workspace setup
 #
 # Directory Structure:
-#   ~/x3plus_ws/src/     - Main workspace with infrastructure packages
+#   ~/x3plus_ws/src/     - Main workspace with playground packages
 #
 # Notes:
 #   - The script is idempotent for .bashrc modifications
 #   - You need to build the workspace with 'colcon build' after running this
 #   - Source your .bashrc or open a new terminal for changes to take effect
-#   - Use this for infrastructure components setup
+#   - Use this for playground components setup
 #
 # Author: X3Plus Setup Project
 # Version: 1.0
@@ -63,8 +63,8 @@ mkdir -p /home/$USER/$workspacename/src
 cd /home/$USER/$workspacename/src
 
 
-wget -O x3plus_inf.repos https://raw.githubusercontent.com/cord-burmeister/x3plus_inf/refs/heads/main/x3plus_inf.repos
-vcs import < x3plus_inf.repos
+wget -O x3plus_playground.repos https://raw.githubusercontent.com/cord-burmeister/x3plus_playground/refs/heads/main/x3plus_playground.repos
+vcs import < x3plus_playground.repos
 
 # Before building the workspace, you need to resolve the package dependencies. 
 # You may have all the dependencies already, but best practice is to check for 
