@@ -1,0 +1,97 @@
+Vagrant.configure("2") do |config|
+    config.vm.box = "gusztavvargadr/windows-11"
+
+    # Configure the remote powershell ports
+    config.vm.network :forwarded_port, guest: 3389, host: 3389
+    config.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
+    config.vm.guest = :windows
+    config.vm.communicator = "winrm"
+    config.vm.boot_timeout = 600
+    config.vm.graceful_halt_timeout = 600
+
+    # The transport used for WinRM communication. 
+    # Valid settings include: :negotiate, :ssl, and :plaintext. 
+    # The default is :negotiate.
+    config.winrm.transport = :plaintext
+    # Whether to use Basic Authentication. Defaults to false. 
+    # If set to true you should also use the :plaintext transport setting 
+    # and the Windows machine must be configured appropriately.
+    config.winrm.basic_auth_only 
+
+    # This is the default network from Hyper-V on a non server Windows Version with NAT
+    config.vm.network "public_network", bridge: "Default Switch"
+
+    # Disable shared folder, because we do not need it
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+
+    # setting the hostname 
+    config.vm.hostname = "box-w11"
+
+    # Configure the hardware parameter
+    config.vm.provider "hyperv" do |vm|
+      vm.memory = 4096
+      vm.maxmemory = 8192
+      vm.cpus = 2
+    end
+
+    # First upgrade the chocolatey installation 
+    # config.vm.provision "shell", inline: <<-SHELL1
+    # Write-Host "Setting the Remote Powershell Firewall"
+    # Enable-PSRemoting -SkipNetworkProfileCheck
+    # netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
+    # Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+    # Write-Host "Setting the Remote Powershell Firewall finished"
+    # SHELL1
+
+     # Very first thing to do is setting the new network profile
+     # in the virtual machine to private, so that the remote powershell
+     # will work correctly after the reboot
+    config.vm.provision "shell", inline: <<-SHELL
+      Write-Host "Set Network to Private"
+      # Enable-PSRemoting -Force -SkipNetworkProfileCheck      
+      $profiles = Get-NetConnectionProfile
+      foreach ($profile in $profiles) {
+         Write-Host "Setting proile  $profile.InterfaceAlias to Private"
+         Set-NetConnectionProfile -InterfaceAlias $profile.InterfaceAlias -NetworkCategory Private
+      }
+      Get-NetFirewallRule -DisplayGroup 'Network Discovery' | Set-NetFirewallRule -Profile 'Private' -Enabled true
+      Write-Host "Set Network to Private done"
+    SHELL
+    
+    # # Before doing anything, ensure that chocolatey is installed
+    config.vm.provision "shell", reboot: true, inline: <<-SHELLA
+        Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+    SHELLA
+
+    # # Before doing anything, ensure that Windows Updates are installed
+    # config.vm.provision "shell", reboot: true, inline: <<-SHELL0
+    #   Install-Module PSWindowsUpdate -Force
+    #   Get-WindowsUpdate -ForceDownload
+    #   Install-WindowsUpdate -ForceInstall
+    # SHELL0
+
+
+
+   # Install or upgrade sdelete installation 
+   config.vm.provision "shell", inline: <<-SHELL
+   Write-Host "Install sdelete"
+   choco install sdelete -y
+   Write-Host "Install sdelete done"
+   SHELL
+
+    # First upgrade the chocolatey installation 
+    config.vm.provision "shell", inline: <<-SHELL1
+    Write-Host "Upgrade chocolatey"
+    choco upgrade chocolatey -y
+    Write-Host "Upgrade chocolatey done"
+    SHELL1
+
+    # Install or upgrade git installation 
+    config.vm.provision "shell", inline: <<-SHELL2
+    Write-Host "Upgrade git"
+    choco upgrade git -y
+    Write-Host "Upgrade git done"
+    SHELL2
+
+  end
+  
