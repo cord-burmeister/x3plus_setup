@@ -46,4 +46,4 @@ sudo apt-get upgrade -y
 sudo apt-get install gz-harmonic -y
 
  # Add sourcing to your shell startup script
-echo "export GZ_VERSION=harmonic" >> /home/vagrant/.bashrc
+echo "export GZ_VERSION=harmonic" >> /home/$USER/.bashrc
