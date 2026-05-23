@@ -8,7 +8,8 @@ Vagrant.configure("2") do |config|
     # This is the external network to have access to other devices on the LAN
     # This is required when using multiple VMs that should communicate with each other
     # Use .\CreateBridgedNetworkAdapter.ps1 to create the External-Auto switch
-    config.vm.network "public_network", bridge: "External-Auto"
+    #config.vm.network "public_network", bridge: "External-Auto"
+    config.vm.network "public_network", bridge: "“Default Switch"
     # setting the hostname 
     config.vm.hostname = "gzclassic"
     
@@ -71,8 +72,7 @@ SHELL1
 config.vm.provision "shell", reboot: true, inline: <<-SHELL2
     # Gazebo Classic is packaged as gazebo (or gazebo11) on Ubuntu 22.04, which is the base for ROS 2 Humble.
     sudo apt update
-    sudo apt install gazebo -y
-    sudo apt install ros-humble-gazebo-ros-pkgs -y
+   pos-humble-gazebo-ros-pkgs -y
 SHELL2
 
   end
