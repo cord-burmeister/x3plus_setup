@@ -57,6 +57,6 @@ Set-Location $location
 & ./PublishBoxFile.ps1 -BoxName $BoxName -WorkingFolder $WorkingFolder -Comment $comment 
 
 # Comment this, when you want the resulting box for debugging purposes. 
-Set-Location $PSScriptRoot/../ubuntu-box/$VmName
+Set-Location $PSScriptRoot/../windows-box/$VmName
 & "C:\Program Files\Vagrant\bin\vagrant.exe" destroy -f 
 Set-Location $location
