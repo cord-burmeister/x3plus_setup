@@ -92,22 +92,28 @@ rosdep install -r -y --from-path src --rosdistro humble
 
 source /home/$USER/$workspacename/install/setup.bash
 
+# Add some help finding errors in the logging 
 if (grep -q "export RCUTILS_COLORIZED_OUTPUT=1" /home/$USER/.bashrc); then
     echo "RCUTILS_COLORIZED_OUTPUT already set in .bashrc"
 else
-# Add some help finding errors in the logging 
     echo "export RCUTILS_COLORIZED_OUTPUT=1" >> /home/$USER/.bashrc
 fi
 
  # Add sourcing to your shell startup script
-
 if (grep -q "source /home/$USER/$workspacename/install/setup.bash" /home/$USER/.bashrc ) then 
     echo "source /home/$USER/$workspacename/install/setup.bash already set in .bashrc"
 else
  echo "source /home/$USER/$workspacename/install/setup.bash" >> /home/$USER/.bashrc
 fi
 
+# Add RMW_IMPLEMENTATION to use cyclonedds as default middleware
+if (grep -q "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" /home/$USER/.bashrc ); then
+    echo "RMW_IMPLEMENTATION already set in .bashrc"
+else
+    echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> /home/$USER/.bashrc
+fi
 
+# Add auto navigation to workspace directory
 if (grep -q "cd /home/$USER/$workspacename" /home/$USER/.bashrc ) then 
     echo "cd /home/$USER/$workspacename already set in .bashrc"
 else

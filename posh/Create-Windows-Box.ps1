@@ -33,6 +33,18 @@ param (
   }
 $location = Get-Location
 
+$VagrantPath = "C:\Program Files\Vagrant\bin\vagrant.exe"
+
+if (Test-Path "C:\HashiCorp\Vagrant\bin\vagrant.exe" -PathType Leaf)
+{
+    $VagrantPath = "C:\HashiCorp\Vagrant\bin\vagrant.exe"
+}
+
+if (!(Test-Path $VagrantPath -PathType Leaf))
+{
+    Write-Error "Vagrant is not installed. Please install vagrant and add it to the path."
+    Exit 12
+}
 
 if ($Comment)
 {
@@ -47,9 +59,9 @@ $VmName = "box-$BoxName"
 Write-Host "Generate the box with name $FullBoxName from VMs $VmName in folder $WorkingFolder"
 
 Set-Location $PSScriptRoot/../windows-box/$VmName
-& "C:\Program Files\Vagrant\bin\vagrant.exe" destroy -f 
-& "C:\Program Files\Vagrant\bin\vagrant.exe" up
-& "C:\Program Files\Vagrant\bin\vagrant.exe" halt
+& "$VagrantPath" destroy -f 
+& "$VagrantPath" up
+& "$VagrantPath" halt
 
 Set-Location $location
 
@@ -58,5 +70,5 @@ Set-Location $location
 
 # Comment this, when you want the resulting box for debugging purposes. 
 Set-Location $PSScriptRoot/../windows-box/$VmName
-& "C:\Program Files\Vagrant\bin\vagrant.exe" destroy -f 
+& "$VagrantPath" destroy -f 
 Set-Location $location
