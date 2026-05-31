@@ -1,3 +1,11 @@
 {
+    "cSpell.words": [
+        "colcon",
+        "cyclonedds",
+        "RCUTILS",
+        "rosdep",
+        "rosdistro",
+        "workspacename"
+    ],
     "ROS2.distro": "humble"
 }
