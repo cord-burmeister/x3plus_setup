@@ -68,8 +68,14 @@ The `x3plus_setup` project consists of the following components:
 
 - `bash/`: Directory containing the setup scripts.
 - `docu/`: Directory containing documentation files.
+- `wsl/`: PowerShell scripts and documentation for WSL VM provisioning.
 - `LICENSE`: License file for the project.
 - `README.md`: This file, containing the project documentation.
+
+## WSL Scripts
+
+- Install-only WSL VM script documentation:
+	- `wsl/CreateNewWslVMInstallOnly.md`
 
 ## Known Issues and Limitations
 

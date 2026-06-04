@@ -2,13 +2,9 @@
 param(
 	[Parameter(Mandatory = $true)]
 	[string] $SourceDistro,
-
 	[switch] $UseInstall,
-
 	[string] $NamePrefix,
-
 	[string] $InstallRoot = "$env:USERPROFILE\WSL",
-
 	[string] $TempRoot = "$env:TEMP"
 )
 

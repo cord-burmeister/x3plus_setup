@@ -2,6 +2,8 @@
     "cSpell.words": [
         "colcon",
         "cyclonedds",
+        "distros",
+        "LASTEXITCODE",
         "RCUTILS",
         "rosdep",
         "rosdistro",

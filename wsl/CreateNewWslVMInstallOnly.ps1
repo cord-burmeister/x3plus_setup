@@ -1,8 +1,7 @@
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
 	[Parameter(Mandatory = $true)]
-	[string] $Distro,
-
+	[string] $Distro = "Ubuntu-22.04",
 	[string] $NamePrefix
 )
 
